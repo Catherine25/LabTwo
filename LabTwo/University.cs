@@ -8,7 +8,8 @@ namespace LabTwo
 {
     class University
     {
-        public University(string _name, int _faculties, int _labs, int _students, int _lections) {
+        public University(string _name, int _faculties, int _labs, int _students, int _lections)
+        {
             Name = _name;
             Faculties = _faculties;
             Labaratories = _labs;
@@ -18,7 +19,8 @@ namespace LabTwo
             Personal = (Labaratories + LectionRooms) / 2;
         }
 
-        public void Copy (ref University _university, ref University _destUniversity) {
+        public void Copy(ref University _university, ref University _destUniversity)
+        {
             _destUniversity.Name = _university.Name;
             _destUniversity.Faculties = _university.Faculties;
             _destUniversity.Labaratories = _university.Labaratories;
@@ -39,27 +41,12 @@ namespace LabTwo
         public static IEnumerable<University> GetData()
         {
             return new List<University>() {
-            /* new University {
-                ID = 1, Name = "Philips", Sales = 2000000 m, City = "Madrid"
-            },
-            new University {
-                ID = 2, Name = "Pionner", Sales = 1000000 m, City = "Berlin"
-            },
-            new University {
-                ID = 3, Name = "Renault", Sales = 2000000 m, City = "Paris"
-            },
-            new University {
-                ID = 4, Name = "Sony Music", Sales = 500000 m, City = "London"
-            },
-            new University {
-                ID = 5, Name = "Sony SCEE", Sales = 2000000 m, City = "Tokio"
-            },
-            new University {
-                ID = 6, Name = "Pepsi", Sales = 9000000 m, City = "New York"
-            },
-            new University {
-                ID = 6, Name = "LG", Sales = 2000000 m, City = "Rome"        */
-            }
+                new University("Nure", 8, 30, 8000, 30),
+                new University("Kpi", 14, 50, 14000, 50),
+                new University("Karazin", 20, 80, 20000, 70),
+                new University("Khai", 7, 15, 11000, 20),
+                new University("Kart", 5, 7, 10000, 18),
         };
         }
+    }
 }

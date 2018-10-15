@@ -11,11 +11,12 @@ namespace LabTwo {
         /// </summary>
         [STAThread]
         static void Main() {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
-
-            Controller c;
+            var universities = University.GetData();
+            Console.WriteLine("There are {universities.Count()} universities.");
+            //--------writetotextbox
+            var UniversitiesDifferents = universities.Distinct();
+            Console.WriteLine("There are {universitiesDifferents.Count()} DIFFERENT universities.");
+            Console.Read();
         }
     }
 }
