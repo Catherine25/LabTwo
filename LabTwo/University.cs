@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LabTwo
-{
-    class University
-    {
-        public University(string _name, int _faculties, int _labs, int _students, int _lections)
-        {
+namespace LabTwo {
+    class University {
+
+        //constructors
+        public University() { }
+
+        public University(string _name, int _faculties, int _labs, int _students, int _lections) {
             Name = _name;
             Faculties = _faculties;
             Labaratories = _labs;
@@ -19,8 +20,8 @@ namespace LabTwo
             Personal = (Labaratories + LectionRooms) / 2;
         }
 
-        public void Copy(ref University _university, ref University _destUniversity)
-        {
+        //methods
+        public void Copy(ref University _university, ref University _destUniversity) {
             _destUniversity.Name = _university.Name;
             _destUniversity.Faculties = _university.Faculties;
             _destUniversity.Labaratories = _university.Labaratories;
@@ -30,6 +31,43 @@ namespace LabTwo
             _destUniversity.Personal = _university.Personal;
         }
 
+        //operators
+        public static University operator +(University _u1, University _u2) {
+            return new University {
+                Name = _u1.Name + _u2.Name,
+                Faculties = _u1.Faculties + _u2.Faculties,
+                Labaratories = _u1.Labaratories + _u2.Labaratories,
+                Students = _u1.Students + _u2.Students,
+                LectionRooms = _u1.LectionRooms + _u2.LectionRooms,
+                Teachers = _u1.Teachers + _u2.Teachers,
+                Personal = _u1.Personal + _u2.Personal
+            };
+        }
+
+        //Index
+        public int this[int index] {
+            get {
+                if (index == 0) return Labaratories;
+                return LectionRooms;
+            }
+            set {
+                if (index == 0) Labaratories = value;
+                LectionRooms = value;
+            }
+        }
+
+        //IEnumerable
+        public static IEnumerable<University> GetData() {
+            return new List<University>() {
+                new University("Nure", 8, 30, 8000, 30),
+                new University("Kpi", 14, 50, 14000, 50),
+                new University("Karazin", 20, 80, 20000, 70),
+                new University("Khai", 7, 15, 11000, 20),
+                new University("Kart", 5, 7, 10000, 18),
+            };
+        }
+
+        //Data
         public string Name { get; set; }
         public int Faculties { get; set; }
         public int Labaratories { get; set; }
@@ -37,16 +75,5 @@ namespace LabTwo
         public int LectionRooms { get; set; }
         public int Teachers { get; set; }
         public int Personal { get; set; }
-
-        public static IEnumerable<University> GetData()
-        {
-            return new List<University>() {
-                new University("Nure", 8, 30, 8000, 30),
-                new University("Kpi", 14, 50, 14000, 50),
-                new University("Karazin", 20, 80, 20000, 70),
-                new University("Khai", 7, 15, 11000, 20),
-                new University("Kart", 5, 7, 10000, 18),
-        };
-        }
     }
 }
