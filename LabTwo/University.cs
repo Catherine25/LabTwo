@@ -10,7 +10,7 @@ namespace LabTwo {
         //constructors
         public University() { }
 
-        public University(string _name, int _faculties, int _labs, int _students, int _lections) {
+        public University(ref string _name, int _faculties, int _labs, int _students, int _lections) {
             Name = _name;
             Faculties = _faculties;
             Labaratories = _labs;
@@ -56,15 +56,13 @@ namespace LabTwo {
             }
         }
 
-        //IEnumerable
-        public static IEnumerable<University> GetData() {
-            return new List<University>() {
-                new University("Nure", 8, 30, 8000, 30),
-                new University("Kpi", 14, 50, 14000, 50),
-                new University("Karazin", 20, 80, 20000, 70),
-                new University("Khai", 7, 15, 11000, 20),
-                new University("Kart", 5, 7, 10000, 18),
-            };
+        //IEqualityComparer
+        public class UniversityComparerByName : IEqualityComparer<University> {
+            public bool Equals(University _u1, University _u2) {
+                if (_u1.Name.Equals(_u2.Name)) return true;
+                else return false;
+            }
+            public int GetHashCode(University _u) => _u.GetHashCode();
         }
 
         //Data
