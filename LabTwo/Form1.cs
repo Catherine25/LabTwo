@@ -47,8 +47,7 @@ namespace WindowsFormsApp1 {
             try {
                 if (index >= 0 && index < universities.Count) {
                     dataGridView1.DataSource = null; //without it error occurs 
-                    switch (objectToChange)
-                    {//using functionality
+                    switch (objectToChange) {//using functionality
                         case "University":
                                 if (function == "Delete")
                                     universities.RemoveAt(index);
