@@ -22,9 +22,10 @@ namespace WindowsFormsApp1
                 universities.Add(new University("", 0, 0, 0, 0, 0, 0));
                 InitGrid();
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 MessageBox.Show(e.Message);
+                InitGrid();
             }
         }
 
@@ -33,7 +34,7 @@ namespace WindowsFormsApp1
             dataGridView1.DataSource = universities;
             dataGridView1.Columns["Name"].HeaderText = "Название университета";
             dataGridView1.Columns["Faculties"].ReadOnly = true;
-            dataGridView1.Columns["Faculties"].HeaderText = "Количество факультативов";
+            dataGridView1.Columns["Faculties"].HeaderText = "Количество факультетов";
             dataGridView1.Columns["Labaratories"].ReadOnly = true;
             dataGridView1.Columns["Labaratories"].HeaderText = "Количество лабораторий";
             dataGridView1.Columns["Students"].ReadOnly = true;
@@ -44,7 +45,6 @@ namespace WindowsFormsApp1
             dataGridView1.Columns["Teachers"].HeaderText = "Количество преподавателей";
             dataGridView1.Columns["Personal"].ReadOnly = true;
             dataGridView1.Columns["Personal"].HeaderText = "Количество персонала";
-
         }
 
         private void addStudentToolStripMenuItem_Click(object sender, EventArgs e)
@@ -62,6 +62,7 @@ namespace WindowsFormsApp1
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                InitGrid();
             }
 
         }
@@ -74,13 +75,14 @@ namespace WindowsFormsApp1
                 if (index >= 0 && index < universities.Count)
                 {
                     dataGridView1.DataSource = null;
-                    universities[index].Students -= 1;
+                    universities[index].dellStudent();
                     InitGrid();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                InitGrid();
             }
         }
 
@@ -102,10 +104,159 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void addTeacherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = dataGridView1.HitTest(mouseX, mouseY).RowIndex;
+                if (index >= 0 && index < universities.Count)
+                {
+                    dataGridView1.DataSource = null;
+                    universities[index].addTeacher();
+                    InitGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                InitGrid();
+            }
+        }
+
+        private void dellTeacherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = dataGridView1.HitTest(mouseX, mouseY).RowIndex;
+                if (index >= 0 && index < universities.Count)
+                {
+                    dataGridView1.DataSource = null;
+                    universities[index].dellTeacher();
+                    InitGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                InitGrid();
+            }
+        }
+
+        private void addPersonalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = dataGridView1.HitTest(mouseX, mouseY).RowIndex;
+                if (index >= 0 && index < universities.Count)
+                {
+                    dataGridView1.DataSource = null;
+                    universities[index].addPersonal();
+                    InitGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                InitGrid();
+            }
+        }
+
+        private void dellPersonalToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = dataGridView1.HitTest(mouseX, mouseY).RowIndex;
+                if (index >= 0 && index < universities.Count)
+                {
+                    dataGridView1.DataSource = null;
+                    universities[index].dellPersonal();
+                    InitGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                InitGrid();
+            }
+        }
+
+        private void добавитьЛабораториюToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = dataGridView1.HitTest(mouseX, mouseY).RowIndex;
+                if (index >= 0 && index < universities.Count)
+                {
+                    dataGridView1.DataSource = null;
+                    universities[index].addLabRoom();
+                    InitGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                InitGrid();
+            }
+           
+        }
+
+        private void добавитьToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = dataGridView1.HitTest(mouseX, mouseY).RowIndex;
+                if (index >= 0 && index < universities.Count)
+                {
+                    dataGridView1.DataSource = null;
+                    universities[index].addLecRoom();
+                    InitGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                InitGrid();
+            }
+        }
+
+        private void добавитьФакультетToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int index = dataGridView1.HitTest(mouseX, mouseY).RowIndex;
+                if (index >= 0 && index < universities.Count)
+                {
+                    dataGridView1.DataSource = null;
+                    universities[index].addFacultie();
+                    InitGrid();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                InitGrid();
+            }
+        }
+
         private void dataGridView1_MouseUp(object sender, MouseEventArgs e)
         {
             mouseX = e.X;
             mouseY = e.Y;
         }
+
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("О программе:\nВыполнили студенты группы КИУКИ-16-7 Солодухина Е. и Шелест С.", Application.ProductName, MessageBoxButtons.OK);
+        }
+
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Вы уверены, что хотите выйти?", Application.ProductName, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
+        }
+
+       
     }
 }

@@ -26,23 +26,24 @@ namespace WindowsFormsApp1
                 Teachers = _teachers;
                 Personal = _personal;
             }
-
+           
         }
 
         //methods
-        public void Copy(ref University _university, ref University _destUniversity)
+        //конструктор копирования
+        public University(University univer)
         {
-            _destUniversity.Name = _university.Name;
-            _destUniversity.Faculties = _university.Faculties;
-            _destUniversity.Labaratories = _university.Labaratories;
-            _destUniversity.Students = _university.Students;
-            _destUniversity.LectionRooms = _university.LectionRooms;
-            _destUniversity.Teachers = _university.Teachers;
-            _destUniversity.Personal = _university.Personal;
+            this.Name = univer.Name;
+            this.Faculties = univer.Faculties;
+            this.Labaratories = univer.Labaratories;
+            this.Students = univer.Students;
+            this.LectionRooms = univer.LectionRooms;
+            this.Teachers = univer.Teachers;
+            this.Personal = univer.Personal;
         }
 
         //operators
-        public static University operator +(University _u1, University _u2)
+        public static University operator + (University _u1, University _u2)
         {
             return new University
             {
@@ -56,7 +57,7 @@ namespace WindowsFormsApp1
             };
         }
 
-        //Index
+        //Индексатор по кол-ву ЛК/ЛБ аудиторий
         public int this[int index]
         {
             get
@@ -71,31 +72,31 @@ namespace WindowsFormsApp1
             }
         }
 
-
+        //отчисление студента
         public void dellStudent()
         {
             if (Students == 0)
-                throw new Exception("Нету студентов для исключения");
+                throw new Exception("Нет студентов для исключения");
             else
                 Students--;
         }
-
+        //удаление ЛК аудитории
         public void dellLecRoom()
         {
             if (LectionRooms == 0)
-                throw new Exception("Нету лекционных мест");
+                throw new Exception("Нет лекционных мест");
             else
                 LectionRooms--;
         }
-
+        //зачисление студента
         public void addStudent()
         {
             if (Teachers * 10 == Students)
-                throw new Exception("Не хватает учителей для зачисления");
+                throw new Exception("Не хватает преподавателей для зачисления");
             else
                 Students++;
         }
-
+        //добавление ЛК аудитории
         public void addLecRoom()
         {
             if (Personal * 2 == LectionRooms)
@@ -103,7 +104,7 @@ namespace WindowsFormsApp1
             else
                 LectionRooms++;
         }
-
+        //добавление ЛБ аудитории
         public void addLabRoom()
         {
             if (Personal * 2 == Labaratories)
@@ -111,42 +112,47 @@ namespace WindowsFormsApp1
             else
                 Labaratories++;
         }
-
+        //удаление ЛБ аудитории
         public void dellLabRoom()
         {
             if (Labaratories == 0)
-                throw new Exception("Нету лабораторий");
+                throw new Exception("Нет лабораторий");
             else
                 Labaratories--;
         }
 
-
+        //добавление преподавателя
         public void addTeacher()
         {
             Teachers++;
         }
-
+        //удаление преподавателя
         public void dellTeacher()
         {
             if (Teachers == 0)
-                throw new Exception("Нету учителей");
+                throw new Exception("Нет преподавателей");
             else
                 Teachers--;
         }
-
+        //добавление персонала
         public void addPersonal()
         {
             Personal++;
         }
-
+        //удаление персонала
         public void dellPersonal()
         {
             if (Personal == 0)
-                throw new Exception("Нету учителей");
+                throw new Exception("Нет преподавателей");
             else
                 Personal--;
         }
-
+        //добавление факультета
+        public void addFacultie()
+        {
+            Faculties++;
+        }
+        //равенство университетов
         public bool Equals(University _u1, University _u2)
         {
             if (_u1 == null && _u2 == null)
