@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace WindowsFormsApp1 {
-    class University : IEqualityComparer<University> {
+    class University{
         //default constructor
         public University() { }
         //constructor with all fields
@@ -102,19 +102,6 @@ namespace WindowsFormsApp1 {
             Controller.CanDelete(Faculties);
             Faculties--;
         }
-        // university equality by name
-        public bool Equals(University u1, University u2) {
-            if (u1 == null && u2 == null)
-                return true;
-            else if (u1 == null || u2 == null)
-                return false;
-            else if (u1.Name.Equals(u2.Name))
-                return true;
-            else
-                return false;
-        }
-        // necessary function for interface
-        public int GetHashCode(University u) => u.GetHashCode();
         // data
         public string Name { get; set; }
         public int Faculties { get; set; }
