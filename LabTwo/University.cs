@@ -1,170 +1,121 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace WindowsFormsApp1
-{
-    class University : IEqualityComparer<University>
-    {
-
-        //constructors
+namespace WindowsFormsApp1 {
+    class University : IEqualityComparer<University> {
+        //default constructor
         public University() { }
-
-        public University(string _name, int _faculties, int _labs, int _students, int _lections, int _teachers, int _personal)
-        {
-            if (Personal * 2 < LectionRooms || Personal * 2 < Labaratories || Teachers * 10 < Students)
-                throw new Exception("Ошибка");
-            else
-            {
-                Name = _name;
-                Faculties = _faculties;
-                Labaratories = _labs;
-                Students = _students;
-                LectionRooms = _lections;
-                Teachers = _teachers;
-                Personal = _personal;
-            }
-           
+        //constructor with all fields
+        public University(string name, int faculties, int labs, int students, int lections, int teachers, int personal) {
+            //check data
+            Controller.IsPersonalEnough(personal, lections, labs);
+            Controller.IsTeachersEnough(teachers, students);
+            //initialization
+            Name = name;
+            Faculties = faculties;
+            Labaratories = labs;
+            Students = students;
+            LectionRooms = lections;
+            Teachers = teachers;
+            Personal = personal;
         }
-
-        //methods
-        //конструктор копирования
-        public University(University univer)
-        {
-            this.Name = univer.Name;
-            this.Faculties = univer.Faculties;
-            this.Labaratories = univer.Labaratories;
-            this.Students = univer.Students;
-            this.LectionRooms = univer.LectionRooms;
-            this.Teachers = univer.Teachers;
-            this.Personal = univer.Personal;
+        // copy constructor
+        public University(University u) {
+            Name = u.Name;
+            Faculties = u.Faculties;
+            Labaratories = u.Labaratories;
+            Students = u.Students;
+            LectionRooms = u.LectionRooms;
+            Teachers = u.Teachers;
+            Personal = u.Personal;
         }
-
-        //operators
-        public static University operator + (University _u1, University _u2)
-        {
-            return new University
-            {
-                Name = _u1.Name + " " + _u2.Name,
-                Faculties = _u1.Faculties + _u2.Faculties,
-                Labaratories = _u1.Labaratories + _u2.Labaratories,
-                Students = _u1.Students + _u2.Students,
-                LectionRooms = _u1.LectionRooms + _u2.LectionRooms,
-                Teachers = _u1.Teachers + _u2.Teachers,
-                Personal = _u1.Personal + _u2.Personal
-            };
+        // + operator
+        public static University operator + (University u1, University u2) {
+            return new University(u1.Name + " " + u2.Name,
+                u1.Faculties + u2.Faculties,
+                u1.Labaratories + u2.Labaratories,
+                u1.Students + u2.Students,
+                u1.LectionRooms + u2.LectionRooms,
+                u1.Teachers + u2.Teachers,
+                u1.Personal + u2.Personal);
         }
-
-        //Индексатор по кол-ву ЛК/ЛБ аудиторий
-        public int this[int index]
-        {
-            get
-            {
-                if (index == 0) return Labaratories;
+        // get fields with index (lection/lab rooms)
+        public int this[int index] {
+            get {
+                if (index == 0)
+                    return Labaratories;
                 return LectionRooms;
             }
-            set
-            {
-                if (index == 0) Labaratories = value;
+            set {
+                if (index == 0)
+                    Labaratories = value;
                 LectionRooms = value;
             }
         }
-
-        //отчисление студента
-        public void dellStudent()
-        {
-            if (Students == 0)
-                throw new Exception("Нет студентов для исключения");
-            else
-                Students--;
+        // deleting student
+        public void DellStudent() {
+            Controller.CanDelete(Students);
+            Students--;
         }
-        //удаление ЛК аудитории
-        public void dellLecRoom()
-        {
-            if (LectionRooms == 0)
-                throw new Exception("Нет лекционных мест");
-            else
-                LectionRooms--;
+        // deleting lection room
+        public void DellLecRoom() {
+            Controller.CanDelete(LectionRooms);
+            LectionRooms--;
         }
-        //зачисление студента
-        public void addStudent()
-        {
-            if (Teachers * 10 == Students)
-                throw new Exception("Не хватает преподавателей для зачисления");
-            else
-                Students++;
+        // adding student
+        public void AddStudent() {
+            Controller.CanAddStudents(Teachers, Students);
+            Students++;
         }
-        //добавление ЛК аудитории
-        public void addLecRoom()
-        {
-            if (Personal * 2 == LectionRooms)
-                throw new Exception("Не хватает персонала для добавления");
-            else
-                LectionRooms++;
+        // adding lectionRooms
+        public void AddLecRoom() {
+            Controller.CanAddAuditories(Personal, LectionRooms, Labaratories);
+            LectionRooms++;
         }
-        //добавление ЛБ аудитории
-        public void addLabRoom()
-        {
-            if (Personal * 2 == Labaratories)
-                throw new Exception("Не хватает персонала для добавления");
-            else
+        // adding labaratories
+        public void AddLabRoom() {
+            Controller.CanAddAuditories(Personal, LectionRooms, Labaratories);
                 Labaratories++;
         }
-        //удаление ЛБ аудитории
-        public void dellLabRoom()
-        {
-            if (Labaratories == 0)
-                throw new Exception("Нет лабораторий");
-            else
-                Labaratories--;
+        // deleting labaratories
+        public void DellLabRoom() {
+            Controller.CanDelete(Labaratories);
+            Labaratories--;
         }
-
-        //добавление преподавателя
-        public void addTeacher()
-        {
-            Teachers++;
+        // adding teachers
+        public void AddTeacher() => Teachers++;
+        // deleting teachers
+        public void dellTeacher() {
+            Controller.CanDelete(Teachers);
+            Teachers--;
         }
-        //удаление преподавателя
-        public void dellTeacher()
-        {
-            if (Teachers == 0)
-                throw new Exception("Нет преподавателей");
-            else
-                Teachers--;
+        // adding Personal
+        public void AddPersonal() => Personal++;
+        // deleting Personal
+        public void dellPersonal() {
+            Controller.CanDelete(Personal);
+            Personal--;
         }
-        //добавление персонала
-        public void addPersonal()
-        {
-            Personal++;
+        // adding Facultie
+        public void AddFacultie() => Faculties++;
+        // deleting Facultie
+        public void DellFacultie() {
+            Controller.CanDelete(Faculties);
+            Faculties--;
         }
-        //удаление персонала
-        public void dellPersonal()
-        {
-            if (Personal == 0)
-                throw new Exception("Нет преподавателей");
-            else
-                Personal--;
-        }
-        //добавление факультета
-        public void addFacultie()
-        {
-            Faculties++;
-        }
-        //равенство университетов
-        public bool Equals(University _u1, University _u2)
-        {
-            if (_u1 == null && _u2 == null)
+        // university equality by name
+        public bool Equals(University u1, University u2) {
+            if (u1 == null && u2 == null)
                 return true;
-            else if (_u1 == null || _u2 == null)
+            else if (u1 == null || u2 == null)
                 return false;
-            else if (_u1.Name.Equals(_u2.Name)) return true;
-            else return false;
+            else if (u1.Name.Equals(u2.Name))
+                return true;
+            else
+                return false;
         }
-        public int GetHashCode(University _u) => _u.GetHashCode();
-
-        //Data
+        // necessary function for interface
+        public int GetHashCode(University u) => u.GetHashCode();
+        // data
         public string Name { get; set; }
         public int Faculties { get; set; }
         public int Labaratories { get; set; }
